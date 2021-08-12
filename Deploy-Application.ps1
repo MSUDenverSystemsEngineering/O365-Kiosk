@@ -153,6 +153,17 @@ Try {
 		[string]$installPhase = 'Post-Installation'
 
 		## <Perform Post-Installation tasks here>
+		$registryPath = "HKLM:\Software\appTatoo"
+		$tatoo = "O365 Configuration"
+		$tatValue = "SSB Kiosk"
+
+		IF(!(Test-Path $registryPath)) {
+    		New-Item -Path $registryPath -Force | Out-Null
+    		New-ItemProperty -path $registryPath -Name $tatoo -Value $tatValue -PropertyType 'String' -Force | Out-Null
+		}
+		ELSE {
+    		New-ItemProperty -Path $registryPath -Name $tatoo -Value $tatValue -PropertyType 'String' -Force | Out-Null
+		}
 
 		## Display a message at the end of the install
 		If (-not $useDefaultMsi) {}
